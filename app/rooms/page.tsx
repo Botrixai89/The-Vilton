@@ -6,6 +6,13 @@ import { Card } from '@/components/ui/card'
 import { Home, Wifi, Tv, Bath, Wind, Phone } from 'lucide-react'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 export default function RoomsPage() {
   const rooms = [
@@ -24,51 +31,7 @@ export default function RoomsPage() {
       ],
       description: 'Our flagship room featuring premium furnishings, a stunning city view, and all modern amenities for the discerning traveler.',
     },
-    {
-      id: 2,
-      name: 'Executive Suite',
-      size: '750 sq ft',
-      image: '/room-images/DSC03893-HDR_1.jpg',
-      features: [
-        'Premium City View',
-        'Separate Living Area',
-        'Extended Workspace',
-        'Luxury Bathroom',
-        'Smart Home Features',
-        'Premium Toiletries',
-      ],
-      description: 'Perfect for extended stays and business travelers. Features a dedicated workspace and luxury finishes throughout.',
-    },
-    {
-      id: 3,
-      name: 'Comfort Studio',
-      size: '550 sq ft',
-      image: '/room-images/DSC03902.jpg',
-      features: [
-        'Well-Equipped Space',
-        'Natural Light',
-        'Modern Design',
-        'Efficient Layout',
-        'Quality Furnishings',
-        'WiFi & Entertainment',
-      ],
-      description: 'Great value without compromising comfort. Ideal for short stays with all essential amenities included.',
-    },
-    {
-      id: 4,
-      name: 'Deluxe Studio',
-      size: '700 sq ft',
-      image: '/room-images/DSC03904.jpg',
-      features: [
-        'Partial City View',
-        'Spacious Layout',
-        'Upgraded Furnishing',
-        'Dining Area',
-        'Premium Appliances',
-        'Extra Storage',
-      ],
-      description: 'A step up in comfort with upgraded furnishings and additional space for families or longer stays.',
-    },
+
   ]
 
   return (
@@ -87,46 +50,68 @@ export default function RoomsPage() {
 
       {/* Rooms Grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="max-w-5xl mx-auto">
+          <Card className="overflow-hidden border-border/30 shadow-lg flex flex-col md:flex-row bg-background">
+            <div className="w-full md:w-1/2 relative bg-muted group">
+              <Carousel className="w-full h-full">
+                <CarouselContent>
+                  {[
+                    '/room-images/DSC03879-HDR_1.jpg',
+                    '/room-images/DSC03893-HDR_1.jpg',
+                    '/room-images/DSC03902.jpg',
+                    '/room-images/DSC03904.jpg',
+                  ].map((img, i) => (
+                    <CarouselItem key={i}>
+                      <div className="h-72 md:h-full min-h-[400px] relative overflow-hidden">
+                        <img src={img} alt={`Luxury Studio View ${i + 1}`} className="w-full h-full object-cover" />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="absolute inset-0 flex items-center justify-between p-4 pointer-events-none">
+                  <div className="pointer-events-auto">
+                    <CarouselPrevious className="static translate-y-0 bg-white/80 hover:bg-white text-black border-none shadow-md" />
+                  </div>
+                  <div className="pointer-events-auto">
+                    <CarouselNext className="static translate-y-0 bg-white/80 hover:bg-white text-black border-none shadow-md" />
+                  </div>
+                </div>
+              </Carousel>
+            </div>
+            
             {rooms.map((room) => (
-              <Card key={room.id} className="overflow-hidden border-border/30 hover:shadow-lg transition-all group">
-                <div className="h-64 relative overflow-hidden bg-muted">
-                  <img src={room.image} alt={room.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                </div>
-                <div className="p-8">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h2 className="font-serif text-3xl font-bold text-primary">{room.name}</h2>
-                      <p className="text-sm text-muted-foreground mt-1">{room.size}</p>
-                    </div>
-                  </div>
-
-                  <p className="text-muted-foreground mb-6">{room.description}</p>
-
-                  <div className="space-y-3 mb-8">
-                    <h3 className="font-semibold text-sm text-primary uppercase tracking-wide">Room Features</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      {room.features.map((feature, i) => (
-                        <div key={i} className="flex items-center text-sm text-muted-foreground">
-                          <span className="w-1.5 h-1.5 bg-accent rounded-full mr-2 flex-shrink-0"></span>
-                          {feature}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3">
-                    <a href="https://wa.me/919685117934" target="_blank" rel="noopener noreferrer" className="flex-1">
-                      <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-sm">
-                        Book Now
-                      </Button>
-                    </a>
+              <div key={room.id} className="w-full md:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h2 className="font-serif text-4xl font-bold text-primary mb-2">{room.name}</h2>
+                    <p className="text-sm font-medium text-accent uppercase tracking-wider">{room.size}</p>
                   </div>
                 </div>
-              </Card>
+
+                <p className="text-muted-foreground mb-8 text-lg leading-relaxed">{room.description}</p>
+
+                <div className="space-y-4 mb-10 text-left">
+                  <h3 className="font-semibold text-sm text-primary uppercase tracking-widest border-b border-border/50 pb-2">Room Features</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4">
+                    {room.features.map((feature, i) => (
+                      <div key={i} className="flex items-center text-sm text-muted-foreground">
+                        <span className="w-1.5 h-1.5 bg-accent rounded-full mr-3 flex-shrink-0"></span>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-3 mt-auto">
+                  <a href="https://wa.me/919685117934" target="_blank" rel="noopener noreferrer" className="flex-1">
+                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-sm h-14 text-lg">
+                      Book Now
+                    </Button>
+                  </a>
+                </div>
+              </div>
             ))}
-          </div>
+          </Card>
         </div>
       </section>
 

@@ -6,6 +6,13 @@ import { Card } from '@/components/ui/card'
 import { Star, MapPin, Wifi, Tv, ParkingCircle, Home } from 'lucide-react'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 export default function HomePage() {
   return (
@@ -14,15 +21,11 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative h-[600px] overflow-hidden">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
+        <img 
+          src="/room-images/DSC03879-HDR_1.jpg" 
+          alt="The Vilton Experience" 
           className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/vilton-full-video.mp4" type="video/mp4" />
-        </video>
+        />
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative h-full flex items-center justify-center text-center px-4 z-10">
           <div className="max-w-3xl space-y-6">
@@ -73,36 +76,56 @@ export default function HomePage() {
 
       {/* Featured Rooms Preview */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="font-serif text-4xl font-bold mb-12 text-primary">Featured Rooms</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { name: 'Luxury Studio', image: '/room-images/DSC03879-HDR_1.jpg', features: ['650 sq ft', 'City View', 'Balcony', 'En-suite Bathroom'] },
-              { name: 'Executive Suite', image: '/room-images/DSC03893-HDR_1.jpg', features: ['750 sq ft', 'Premium Furnishing', 'Workspace', 'Extended Amenities'] },
-              { name: 'Comfort Studio', image: '/room-images/DSC03902.jpg', features: ['500 sq ft', 'Well-equipped', 'Natural Light', 'Modern Design'] },
-            ].map((room, i) => (
-              <Card key={i} className="overflow-hidden border-border/30 hover:shadow-lg transition-all group">
-                <div className="h-48 relative overflow-hidden bg-muted">
-                  <img src={room.image} alt={room.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-serif text-4xl font-bold mb-12 text-center text-primary">Our Signature Studio</h2>
+          <Card className="overflow-hidden border-border/30 shadow-lg flex flex-col md:flex-row bg-background">
+            <div className="w-full md:w-1/2 relative bg-muted group">
+              <Carousel className="w-full h-full">
+                <CarouselContent>
+                  {[
+                    '/room-images/DSC03879-HDR_1.jpg',
+                    '/room-images/DSC03893-HDR_1.jpg',
+                    '/room-images/DSC03902.jpg',
+                    '/room-images/DSC03904.jpg',
+                  ].map((img, i) => (
+                    <CarouselItem key={i}>
+                      <div className="h-64 md:h-full min-h-[300px] relative overflow-hidden">
+                        <img src={img} alt={`Luxury Studio View ${i + 1}`} className="w-full h-full object-cover" />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="absolute inset-0 flex items-center justify-between p-4 pointer-events-none">
+                  <div className="pointer-events-auto">
+                    <CarouselPrevious className="static translate-y-0 bg-white/80 hover:bg-white text-black border-none shadow-md" />
+                  </div>
+                  <div className="pointer-events-auto">
+                    <CarouselNext className="static translate-y-0 bg-white/80 hover:bg-white text-black border-none shadow-md" />
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="font-serif text-2xl font-bold mb-4 text-primary">{room.name}</h3>
-                  <ul className="space-y-2 mb-6">
-                    {room.features.map((f, j) => (
-                      <li key={j} className="text-sm text-muted-foreground flex items-center">
-                        <span className="w-1.5 h-1.5 bg-accent rounded-full mr-2"></span>{f}
-                      </li>
-                    ))}
-                  </ul>
-                  <a href="https://wa.me/919685117934" target="_blank" rel="noopener noreferrer" className="block w-full">
-                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-sm">
-                      Book Now
-                    </Button>
-                  </a>
-                </div>
-              </Card>
-            ))}
-          </div>
+              </Carousel>
+            </div>
+            <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
+              <h3 className="font-serif text-3xl font-bold mb-4 text-primary">Luxury Studio</h3>
+              <p className="text-muted-foreground mb-6">
+                Our flagship room featuring premium furnishings, a stunning city view, and all modern amenities for the discerning traveler.
+              </p>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {[
+                  '650 sq ft', 'City View', 'Balcony', 'En-suite Bathroom', 'Kitchenette', 'Smart TV'
+                ].map((f, j) => (
+                  <div key={j} className="text-sm text-muted-foreground flex items-center">
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full mr-2"></span>{f}
+                  </div>
+                ))}
+              </div>
+              <a href="https://wa.me/919685117934" target="_blank" rel="noopener noreferrer">
+                <Button className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground rounded-sm px-8 h-12 text-base">
+                  Book Your Stay
+                </Button>
+              </a>
+            </div>
+          </Card>
           <div className="text-center mt-12">
             <Link href="/rooms">
               <Button variant="outline" className="border-accent text-accent hover:bg-accent/5 rounded-sm px-8 h-10">
